@@ -86,6 +86,28 @@ printf 'beta:$1$$.OPcLRctp0tpQ81Db9tKP/' >> .htpasswd
 #change to cms directory
 cd cms/
 
+#create index.php
+touch index.php
+
+printf "
+<?php
+// Replacement for symlinked index.php file for TYPO3
+// Author: ziegenhain@team-digital.de
+// Version 1.0 – 01-02-2015
+
+// Since we don't allow symlinks to files (security reasons, only to directories)
+// we include typo3_src/index.php in this script, therefore symlink to file is 
+// not needed and still the current version of the TYPO3 index.php is loaded.
+
+require 'typo3_src/index.php';" >> index.php
+
+#create fileadmin, user_upload and typo3conf
+mkdir fileadmin
+cd fileadmin
+mkdir user_upload
+cd ../
+mkdir typo3conf
+
 #create symlinks
 ln -s ../typo3_src/ typo3_src
 ln -s typo3_src/typo3 typo3
